@@ -16,8 +16,19 @@ runs:
       with:
         fetch-depth: 0 #fetch-depth is needed for GitVersion
 
-    - run: echo random-number "$RANDOM_NUMBER"
-      shell: bash
-      env:
-        RANDOM_NUMBER: ${{ steps.foo.outputs.random-number }}
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+ 
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v1.1.1
+      with:
+        versionSpec: '5.x'
+
+    - name: Determine Last GitHub Version
+      uses: gittools/actions/gitversion/execute@v1.1.1
+      with: 
+        overrideconfig: mode=ContinuousDelivery
+        updateAssemblyInfo: true
         
