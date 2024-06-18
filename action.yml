@@ -1,5 +1,5 @@
-name: 'Hello World'
-description: 'Greet someone'
+name: 'Phoenix Standard GitHub Action Build'
+description: 'Runs the standard package creation'
 inputs:
   who-to-greet:  # id of input
     description: 'Who to greet'
@@ -12,24 +12,40 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Set Greeting
-      run: echo "Hello $INPUT_WHO_TO_GREET."
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 #fetch-depth is needed for GitVersion
+
+    - id: foo
+      uses: plazarre/phoenix-composite-action@v1
+      with:
+        who-to-greet: 'Mona the Octocat'
+    - run: echo random-number "$RANDOM_NUMBER"
       shell: bash
       env:
-        INPUT_WHO_TO_GREET: ${{ inputs.who-to-greet }}
+        RANDOM_NUMBER: ${{ steps.foo.outputs.random-number }}
 
-    - name: Random Number Generator
-      id: random-number-generator
-      run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
-      shell: bash
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+ 
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v1.1.1
+      with:
+        versionSpec: '5.x'
 
-    - name: Set GitHub Path
-      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
-      shell: bash
-      env:
-        GITHUB_ACTION_PATH: ${{ github.action_path }}
-
-    - name: Run goodbye.sh
-      run: goodbye.sh
-      shell: bash
-
+    - name: Determine Last GitHub Version
+      uses: gittools/actions/gitversion/execute@v1.1.1
+      with: 
+        overrideconfig: mode=ContinuousDelivery
+        updateAssemblyInfo: true
+        
+    - name: set Phoenix version 
+      run: |
+         PhoenixVersion="${{env.fullSemVer}}"
+         echo "PhoenixVersion=${PhoenixVersion}" >> $GITHUB_ENV
+         
+    - name: show Phoenix version
+      run: echo '${{ env.PhoenixVersion }}'
