@@ -21,14 +21,9 @@ runs:
       with:
         dotnet-version: 8.0.x
  
-    - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v1.1.1
+    - name: Set csproj, props version(s)
+      id: update
+      uses: vers-one/dotnet-project-version-updater@v1.6
       with:
-        versionSpec: '5.x'
-
-    - name: Determine Last GitHub Version
-      uses: gittools/actions/gitversion/execute@v1.1.1
-      with: 
-        overrideconfig: mode=ContinuousDelivery
-        updateAssemblyInfo: true
-        
+        file: "./**/*.{csproj,props}"
+        version: "bump-revision"
