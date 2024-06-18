@@ -26,26 +26,26 @@ runs:
       env:
         RANDOM_NUMBER: ${{ steps.foo.outputs.random-number }}
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
+    #- name: Setup .NET
+    #  uses: actions/setup-dotnet@v4
+    #  with:
+    #    dotnet-version: 8.0.x
  
-    - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v1.1.1
-      with:
-        versionSpec: '5.x'
+    #- name: Install GitVersion
+    #  uses: gittools/actions/gitversion/setup@v1.1.1
+    #  with:
+    #    versionSpec: '5.x'
 
-    - name: Determine Last GitHub Version
-      uses: gittools/actions/gitversion/execute@v1.1.1
-      with: 
-        overrideconfig: mode=ContinuousDelivery
-        updateAssemblyInfo: true
+    #- name: Determine Last GitHub Version
+    #  uses: gittools/actions/gitversion/execute@v1.1.1
+    #  with: 
+    #    overrideconfig: mode=ContinuousDelivery
+    #    updateAssemblyInfo: true
         
-    - name: set Phoenix version 
-      run: |
-         PhoenixVersion="${{env.fullSemVer}}"
-         echo "PhoenixVersion=${PhoenixVersion}" >> $GITHUB_ENV
+    #- name: set Phoenix version 
+    #  run: |
+    #     PhoenixVersion="${{env.fullSemVer}}"
+    #     echo "PhoenixVersion=${PhoenixVersion}" >> $GITHUB_ENV
          
-    - name: show Phoenix version
-      run: echo '${{ env.PhoenixVersion }}'
+    #- name: show Phoenix version
+    #  run: echo '${{ env.PhoenixVersion }}'
