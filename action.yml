@@ -41,13 +41,17 @@ runs:
         git push
         
     - name: Add Private Phoenix NuGet Registry
+      shell: bash
       run: dotnet nuget add source --username plazarre --password ${{ inputs.NUGET_PACKAGE_TOKEN }} --store-password-in-clear-text --name "Github Private Repo" "https://nuget.pkg.github.com/plazarre/index.json"
       
     - name: Restore dependencies
+      shell: bash
       run: dotnet restore
     
     - name: Build & Pack
+      shell: bash
       run: dotnet build --no-restore /p:Version="${{ steps.update.outputs.newVersion }}"
 
     - name: Test
+      shell: bash
       run: dotnet test --no-build --verbosity normal
