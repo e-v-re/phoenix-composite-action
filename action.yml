@@ -28,11 +28,11 @@ runs:
         file: "./**/*.{csproj,props}"
         version: "bump-revision"
 
-#        git config user.email "your-email@users.noreply.github.com"
     - name: Update github version to ${{ steps.bump.outputs.newVersion }}
       shell: bash
       run: |
         git config user.name ${{ github.actor }}
+        git config user.email "${{ github.actor-id }}+${{ github.actor }}@users.noreply.github.com"
         git add .
         git commit -m "Bump project version to ${{ steps.bump.outputs.newVersion }}"
         git push
