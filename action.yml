@@ -6,9 +6,9 @@ inputs:
     required: true
     default: 'World'
 outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-number }}
+  newVersion:
+    description: "The new version"
+    value: ${{ steps.bump.outputs.newVersion }}
 runs:
   using: "composite"
   steps:
@@ -37,3 +37,14 @@ runs:
         git commit -m "Bump project version to ${{ steps.update.outputs.newVersion }}"
         git push
         
+    - name: Add Private Phoenix NuGet Registry
+      run: dotnet nuget add source --username plazarre --password ${{ secrets.NUGET_PACKAGE_TOKEN }} --store-password-in-clear-text --name "Github Private Repo" "https://nuget.pkg.github.com/plazarre/index.json"
+      
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build & Pack
+      run: dotnet build --no-restore /p:Version="${{ steps.update.outputs.newVersion }}"
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
