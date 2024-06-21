@@ -5,6 +5,9 @@ inputs:
     description: 'Who to greet'
     required: true
     default: 'World'
+  NUGET_PACKAGE_TOKEN: 
+    description: NuGet Package Token
+    required: true
 outputs:
   newVersion:
     description: "The new version"
@@ -38,7 +41,7 @@ runs:
         git push
         
     - name: Add Private Phoenix NuGet Registry
-      run: dotnet nuget add source --username plazarre --password ${{ secrets.NUGET_PACKAGE_TOKEN }} --store-password-in-clear-text --name "Github Private Repo" "https://nuget.pkg.github.com/plazarre/index.json"
+      run: dotnet nuget add source --username plazarre --password ${{ inputs.NUGET_PACKAGE_TOKEN }} --store-password-in-clear-text --name "Github Private Repo" "https://nuget.pkg.github.com/plazarre/index.json"
       
     - name: Restore dependencies
       run: dotnet restore
