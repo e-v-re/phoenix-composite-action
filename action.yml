@@ -59,7 +59,7 @@ runs:
       uses: actions/upload-artifact@v2
       with:
         name: nugetPackage
-        path: ./src/${{ inputs.Respository_Name }}/bin/Debug/*.nupkg
+        path: ./src/${{ inputs.Repository_Name }}/bin/Debug/*.nupkg
 
     - name: Download nuget package artifact
       uses: actions/download-artifact@v1.0.0
