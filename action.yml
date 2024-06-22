@@ -1,10 +1,6 @@
 name: 'Phoenix Standard GitHub Action Build'
 description: 'Runs the standard package creation'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
   NUGET_PACKAGE_TOKEN: 
     description: NuGet Package Token
     required: true
