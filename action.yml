@@ -1,4 +1,4 @@
-name: 'Phoenix Standard GitHub Action Build'
+name: 'e-v-re Standard GitHub Action Build'
 description: 'Runs the standard package creation'
 inputs:
   NUGET_PACKAGE_TOKEN: 
@@ -39,9 +39,9 @@ runs:
         git commit -m "Bump project version to ${{ steps.update.outputs.newVersion }}"
         git push
         
-    - name: Add Private Phoenix NuGet Registry
+    - name: Add Private e-v-re NuGet Registry
       shell: bash
-      run: dotnet nuget add source --username plazarre --store-password-in-clear-text --name "Github Private Repo" "https://nuget.pkg.github.com/plazarre/index.json" --password ${{ inputs.NUGET_PACKAGE_TOKEN }}
+      run: dotnet nuget add source --username plazarre --store-password-in-clear-text --name "Github e-v-re Private Repo" "https://nuget.pkg.github.com/e-v-re/index.json" --password ${{ inputs.NUGET_PACKAGE_TOKEN }}
       
     - name: Restore dependencies
       shell: bash
@@ -69,7 +69,7 @@ runs:
     - name: Push package to GitHub packages 
       shell: bash
       # if: needs.build.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change  
-      run: dotnet nuget push "./nugetPackage/*.nupkg" --source "Github Private Repo" --api-key ${{ inputs.NUGET_PACKAGE_TOKEN }} 
+      run: dotnet nuget push "./nugetPackage/*.nupkg" --source "Github e-v-re Private Repo" --api-key ${{ inputs.NUGET_PACKAGE_TOKEN }} 
 
     - name: Create Release
       # if: 1 == 0 #needs.build.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change
