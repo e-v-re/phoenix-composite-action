@@ -65,9 +65,7 @@ runs:
     - name: Download nuget package artifact
       uses: actions/download-artifact@v4
       with:
-        name: nugetPackage
-        path: my-artifact
-        pattern: **/*.nupkg
+        path: nugetPackage
         merge-multiple: true
         
     - name: Push package to GitHub packages 
