@@ -68,7 +68,7 @@ runs:
         path: nugetPackage
         merge-multiple: true
 
-    - Show names
+    - name: Show download directory
       shell: bash
       run: ls -l
       
