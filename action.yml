@@ -70,7 +70,7 @@ runs:
 
     - name: Show download directory
       shell: bash
-      run: ls -l
+      run: ls ./nugetPackage -l
       
     - name: Push package to GitHub packages 
       shell: bash
