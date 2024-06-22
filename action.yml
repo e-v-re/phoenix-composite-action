@@ -56,10 +56,11 @@ runs:
       run: dotnet test --no-build --verbosity normal
 
     - name: Upload NuGet package to GitHub
+    # ${{ inputs.Repository_Name }}
       uses: actions/upload-artifact@v4
       with:
         name: nugetPackage
-        path: ./src/${{ inputs.Repository_Name }}/bin/Debug/*.nupkg
+        path: ./src/**/bin/Debug/*.nupkg
 
     - name: Download nuget package artifact
       uses: actions/download-artifact@v1.0.0
