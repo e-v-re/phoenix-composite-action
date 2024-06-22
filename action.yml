@@ -65,7 +65,7 @@ runs:
     - name: Download nuget package artifact
       uses: actions/download-artifact@v4
       with:
-        path: ./nugetPackage
+        path: nugetPackage
         merge-multiple: true
 
     - Show names
