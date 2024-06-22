@@ -61,7 +61,7 @@ runs:
 
     - name: Find all the nupkg files
       shell: bash
-      run: find ./src/ -type f -name "*.nupkg"
+      run: find ./src/ -type f -name "*.nupkg" -exec cp {} ./nugetUpload/ \;
 
     - name: Upload NuGet package to GitHub
     # ${{ inputs.Repository_Name }}
