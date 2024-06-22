@@ -57,7 +57,7 @@ runs:
 
     - name: Make nuget directory
       shell: bash
-      run: mk nugetUpload
+      run: mkdir nugetUpload
 
     - name: Find all the nupkg files
       shell: bash
