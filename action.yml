@@ -70,15 +70,15 @@ runs:
     - name: Push package to GitHub packages 
       shell: bash
       # if: needs.build.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change  
-      run: dotnet nuget push "./nugetPackage/*.nupkg" --source "Github Private Repo" --api-key ${{ secrets.NUGET_PACKAGE_TOKEN }} 
+      run: dotnet nuget push "./nugetPackage/*.nupkg" --source "Github Private Repo" --api-key ${{ inputs.NUGET_PACKAGE_TOKEN }} 
 
     - name: Create Release
       # if: 1 == 0 #needs.build.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change
       uses: actions/create-release@v1
       # uses: comnoco/create-release-action@v2.0.5
       env:
-        GITHUB_TOKEN: ${{ secrets.NUGET_PACKAGE_TOKEN }} 
+        GITHUB_TOKEN: ${{ inputs.NUGET_PACKAGE_TOKEN }} 
       with:
-        tag_name: "v${{env.PhoenixVersion}}"
-        release_name: Release ${{env.PhoenixVersion}}
+        tag_name: "v${{steps.update.outputs.newVersion}}"
+        release_name: Release ${{steps.update.outputs.newVersion}}
     
