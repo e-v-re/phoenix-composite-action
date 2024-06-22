@@ -59,14 +59,14 @@ runs:
     # ${{ inputs.Repository_Name }}
       uses: actions/upload-artifact@v4
       with:
-        name: nugetPackage
+        name: nugetPackage-source
         path: ./src/**/bin/Debug/*.nupkg
 
     - name: Merge Artifacts
       uses: actions/upload-artifact/merge@v4
       with:
         name: all-my-files
-        pattern: *.nupkg
+        pattern: nugetPackage-*
 
     - name: Download nuget package artifact
       uses: actions/download-artifact@v4
