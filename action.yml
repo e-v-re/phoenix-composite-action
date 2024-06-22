@@ -59,18 +59,10 @@ runs:
       shell: bash
       run: mkdir nugetUpload
     
-    - name: Show download directory 1
-      shell: bash
-      run: ls . -R
-
-    - name: Find all the nupkg files
+    - name: Find all the nupkg files and move to nugetUpload
       shell: bash
       run: find ./src/ -type f -name "*.nupkg" -exec cp {} ./nugetUpload/ \;
 
-    - name: Show download directory 2
-      shell: bash
-      run: ls . -R
-      
     - name: Push package to GitHub packages 
       shell: bash
       # if: needs.build.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change  
