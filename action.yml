@@ -58,31 +58,23 @@ runs:
     - name: Make nuget directory
       shell: bash
       run: mkdir nugetUpload
+    
+    - name: Show download directory 1
+      shell: bash
+      run: ls . -R
 
     - name: Find all the nupkg files
       shell: bash
       run: find ./src/ -type f -name "*.nupkg" -exec cp {} ./nugetUpload/ \;
 
-    - name: Upload NuGet package to GitHub
-    # ${{ inputs.Repository_Name }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: nugetPackage
-        path: ./nugetUpload/*.nupkg
-
-    - name: Download nuget package artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: nugetPackage
-
-    - name: Show download directory
+    - name: Show download directory 2
       shell: bash
       run: ls . -R
       
     - name: Push package to GitHub packages 
       shell: bash
       # if: needs.build.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change  
-      run: dotnet nuget push "./nugetPackage/*.nupkg" --source "Github e-v-re Private Repo" --api-key ${{ inputs.NUGET_PACKAGE_TOKEN }} 
+      run: dotnet nuget push "./nugetUpload/*.nupkg" --source "Github e-v-re Private Repo" --api-key ${{ inputs.NUGET_PACKAGE_TOKEN }} 
 
     - name: Create Release
       # if: 1 == 0 #needs.build.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change
