@@ -55,6 +55,14 @@ runs:
       shell: bash
       run: dotnet test --no-build --verbosity normal
 
+    - name: Make nuget directory
+      shell: bash
+      run: mk nugetUpload
+
+    - name: Find all the nupkg files
+      shell: bash
+      run: find ./src/ -type f -name "*.nupkg"
+
     - name: Upload NuGet package to GitHub
     # ${{ inputs.Repository_Name }}
       uses: actions/upload-artifact@v4
