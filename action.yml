@@ -55,3 +55,30 @@ runs:
     - name: Test
       shell: bash
       run: dotnet test --no-build --verbosity normal
+
+    - name: Upload NuGet package to GitHub
+      uses: actions/upload-artifact@v2
+      with:
+        name: nugetPackage
+        path: ./src/Phoenix.Result/bin/Debug/*.nupkg
+
+    - name: Download nuget package artifact
+      uses: actions/download-artifact@v1.0.0
+      with:
+        name: nugetPackage
+        
+    - name: Push package to GitHub packages 
+      shell: bash
+      # if: needs.build.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change  
+      run: dotnet nuget push "./nugetPackage/*.nupkg" --source "Github Private Repo" --api-key ${{ secrets.NUGET_PACKAGE_TOKEN }} 
+
+    - name: Create Release
+      # if: 1 == 0 #needs.build.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change
+      uses: actions/create-release@v1
+      # uses: comnoco/create-release-action@v2.0.5
+      env:
+        GITHUB_TOKEN: ${{ secrets.NUGET_PACKAGE_TOKEN }} 
+      with:
+        tag_name: "v${{env.PhoenixVersion}}"
+        release_name: Release ${{env.PhoenixVersion}}
+    
