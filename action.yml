@@ -67,7 +67,7 @@ runs:
     # --verbosity normal    
     - name: Test
       shell: bash
-      run: dotnet test --no-build --verbosity diag --settings ./Testing.runsettings --environment CONNECTIONSTRINGS__SQL__PHOENIX="test2"
+      run: dotnet test --no-build --verbosity diag --settings ./Testing.runsettings --environment ABC="test2"
         
     - name: Make nuget directory
       shell: bash
