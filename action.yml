@@ -58,7 +58,12 @@ runs:
     - name: Build & Pack
       shell: bash
       run: dotnet build --no-restore /p:Version="${{ steps.update.outputs.newVersion }}"
-
+      
+    - name: Export all secrets to env variables
+      uses: oNaiPs/secrets-to-env-action@v1.5
+      with:
+        secrets: ${{ toJSON(inputs.secrets) }}
+        
     - name: Test
       shell: bash
       run: dotnet test --no-build --verbosity normal
@@ -74,14 +79,14 @@ runs:
     - name: Push package to GitHub packages 
       shell: bash
       # if: needs.build.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change  
-      run: dotnet nuget push "./nugetUpload/*.nupkg" --source "Github e-v-re Private Repo" --api-key ${{ inputs.secrets.NUGET_PACKAGE_TOKEN }} 
+      run: dotnet nuget push "./nugetUpload/*.nupkg" --source "Github e-v-re Private Repo" --api-key ${{ fromJson(inputs.secrets).NUGET_PACKAGE_TOKEN }} 
 
     - name: Create Release
       # if: 1 == 0 #needs.build.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change
       uses: actions/create-release@v1
       # uses: comnoco/create-release-action@v2.0.5
       env:
-        GITHUB_TOKEN: ${{ inputs.secrets.NUGET_PACKAGE_TOKEN }} 
+        GITHUB_TOKEN: ${{ fromJson(inputs.secrets).NUGET_PACKAGE_TOKEN }} 
       with:
         tag_name: "v${{steps.update.outputs.newVersion}}"
         release_name: Release ${{steps.update.outputs.newVersion}}
