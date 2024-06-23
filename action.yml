@@ -63,6 +63,10 @@ runs:
       uses: oNaiPs/secrets-to-env-action@v1.5
       with:
         secrets: ${{ toJSON(inputs.secrets) }}
+
+    - name: list env vars
+      shell: bash
+      run: echo printenv
         
     - name: Test
       shell: bash
