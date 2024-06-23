@@ -56,9 +56,9 @@ runs:
       with:
         secrets: ${{ inputs.secrets }}
 
-    - name: list env vars
-      shell: bash
-      run: printenv
+    #- name: list env vars
+    #  shell: bash
+    #  run: printenv
 
     - name: Find all the nupkg files and move to nugetUpload
       shell: bash
@@ -66,7 +66,7 @@ runs:
         
     - name: Test
       shell: bash
-      run: dotnet test --no-build --verbosity normal --settings Testing.runsettings
+      run: dotnet test --no-build --verbosity normal --settings ./Testing.runsettings
         
     - name: Make nuget directory
       shell: bash
