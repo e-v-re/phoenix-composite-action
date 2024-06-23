@@ -1,8 +1,8 @@
 name: 'e-v-re Standard GitHub Action Build'
 description: 'Runs the standard package creation'
 inputs:
-  NUGET_PACKAGE_TOKEN: 
-    description: NuGet Package Token
+  secrets:
+    description: The github action secrets
     required: true
   Repository_Name:
     description: The name of the repository
@@ -41,7 +41,7 @@ runs:
         
     - name: Add Private e-v-re NuGet Registry
       shell: bash
-      run: dotnet nuget add source --username plazarre --store-password-in-clear-text --name "Github e-v-re Private Repo" "https://nuget.pkg.github.com/e-v-re/index.json" --password ${{ inputs.NUGET_PACKAGE_TOKEN }}
+      run: dotnet nuget add source --username plazarre --store-password-in-clear-text --name "Github e-v-re Private Repo" "https://nuget.pkg.github.com/e-v-re/index.json" --password ${{ inputs.secrets.NUGET_PACKAGE_TOKEN }}
       
     - name: Restore dependencies
       shell: bash
@@ -66,14 +66,14 @@ runs:
     - name: Push package to GitHub packages 
       shell: bash
       # if: needs.build.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change  
-      run: dotnet nuget push "./nugetUpload/*.nupkg" --source "Github e-v-re Private Repo" --api-key ${{ inputs.NUGET_PACKAGE_TOKEN }} 
+      run: dotnet nuget push "./nugetUpload/*.nupkg" --source "Github e-v-re Private Repo" --api-key ${{ inputs.secrets.NUGET_PACKAGE_TOKEN }} 
 
     - name: Create Release
       # if: 1 == 0 #needs.build.outputs.CommitsSinceVersionSource > 0 #Only release if there has been a commit/version change
       uses: actions/create-release@v1
       # uses: comnoco/create-release-action@v2.0.5
       env:
-        GITHUB_TOKEN: ${{ inputs.NUGET_PACKAGE_TOKEN }} 
+        GITHUB_TOKEN: ${{ inputs.secrets.NUGET_PACKAGE_TOKEN }} 
       with:
         tag_name: "v${{steps.update.outputs.newVersion}}"
         release_name: Release ${{steps.update.outputs.newVersion}}
