@@ -46,7 +46,11 @@ runs:
     - name: Restore dependencies
       shell: bash
       run: dotnet restore
-    
+
+    - name: View directory
+      shell: bash
+      run: ls . -R
+      
     - name: Build & Pack
       shell: bash
       run: dotnet build --no-restore /p:Version="${{ steps.update.outputs.newVersion }}"
