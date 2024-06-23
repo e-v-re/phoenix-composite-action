@@ -59,12 +59,14 @@ runs:
     - name: list env vars
       shell: bash
       run: printenv
+
+    - name: Find all the nupkg files and move to nugetUpload
+      shell: bash
+      run: find ./test/ -type f -name "*.runsettings"
         
     - name: Test
       shell: bash
-      run: dotnet test --no-build --verbosity normal
-      env: 
-        CONNECTIONSTRINGS__SQL__PHOENIX: "abc"
+      run: dotnet test --no-build --verbosity normal --settings Testing.runsettings
         
     - name: Make nuget directory
       shell: bash
