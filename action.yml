@@ -62,7 +62,7 @@ runs:
 
     - name: Find all the nupkg files and move to nugetUpload
       shell: bash
-      run: find ./test/ -type f -name "*.runsettings"
+      run: find ./ -type f -name "*.runsettings"
         
     - name: Test
       shell: bash
