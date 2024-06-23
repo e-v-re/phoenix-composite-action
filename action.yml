@@ -16,11 +16,11 @@ runs:
   steps:
     - name: Output secrets
       shell: bash
-      run: ECHO ${{ inputs.secrets }}
+      run: echo '${{ inputs.secrets }}'
 
     - name: Output serets
       shell: bash
-      run: ECHO ${{ fromJSON(inputs.secrets.NUGET_PACKAGE_TOKEN) }}
+      run: echo '${{ fromJSON(inputs.secrets.NUGET_PACKAGE_TOKEN) }}'
   
     - uses: actions/checkout@v4
       with:
