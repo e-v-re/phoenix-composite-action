@@ -60,9 +60,9 @@ runs:
     #  shell: bash
     #  run: printenv
 
-    - name: Find all the nupkg files and move to nugetUpload
-      shell: bash
-      run: find ./ -type f -name "*.runsettings"
+    # - name: Find all the nupkg files and move to nugetUpload
+    #  shell: bash
+    #  run: find ./ -type f -name "*.runsettings"
     
     # --verbosity normal    
     - name: Test
