@@ -14,14 +14,6 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Output secrets
-      shell: bash
-      run: echo '${{ inputs.secrets }}'
-
-    - name: Output serets
-      shell: bash
-      run: echo '${{ fromJSON(inputs.secrets).NUGET_PACKAGE_TOKEN }}'
-  
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0 #fetch-depth is needed for GitVersion
@@ -62,7 +54,7 @@ runs:
     - name: Export all secrets to env variables
       uses: oNaiPs/secrets-to-env-action@v1.5
       with:
-        secrets: ${{ toJSON(inputs.secrets) }}
+        secrets: ${{ inputs.secrets }}
 
     - name: list env vars
       shell: bash
