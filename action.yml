@@ -20,7 +20,7 @@ runs:
 
     - name: Output serets
       shell: bash
-      run: ECHO ${{ fromJSON(intputs.secrets) }}
+      run: ECHO ${{ fromJSON(inputs.secrets.NUGET_PACKAGE_TOKEN) }}
   
     - uses: actions/checkout@v4
       with:
