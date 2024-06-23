@@ -58,7 +58,7 @@ runs:
 
     - name: list env vars
       shell: bash
-      run: echo printenv
+      run: printenv
         
     - name: Test
       shell: bash
