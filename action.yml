@@ -63,7 +63,7 @@ runs:
     - name: Test
       shell: bash
       run: dotnet test --no-build --verbosity normal
-      with: 
+      env: 
         CONNECTIONSTRINGS__SQL__PHOENIX: "abc"
         
     - name: Make nuget directory
