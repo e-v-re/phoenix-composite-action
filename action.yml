@@ -65,8 +65,9 @@ runs:
     #  run: find ./ -type f -name "*.runsettings"
 
     - name: List files in the repository
-      run: |
-        ls ${{ github.workspace }}
+      shell: bash
+      run: ls -lR
+    # ${{ github.workspace }}
     
     # --verbosity normal    
     - name: Test
