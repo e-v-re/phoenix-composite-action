@@ -7,6 +7,9 @@ inputs:
   Repository_Name:
     description: The name of the repository
     required: true
+  debug_directory:
+    description: true to display a list of directories
+    default: false
 outputs:
   newVersion:
     description: "The new version"
@@ -65,9 +68,9 @@ runs:
     #  run: find ./ -type f -name "*.runsettings"
 
     - name: List files in the repository
+      if: inputs.debug_directory == 'true'
       shell: bash
       run: ls -lR
-    # ${{ github.workspace }}
     
     # --verbosity normal    
     - name: Test
