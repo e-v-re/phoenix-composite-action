@@ -63,6 +63,10 @@ runs:
     # - name: Find all the nupkg files and move to nugetUpload
     #  shell: bash
     #  run: find ./ -type f -name "*.runsettings"
+
+    - name: List files in the repository
+      run: |
+        ls ${{ github.workspace }}
     
     # --verbosity normal    
     - name: Test
