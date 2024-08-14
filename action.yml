@@ -10,6 +10,8 @@ inputs:
   debug_directory:
     description: true to display a list of directories
     default: false
+  frameworks:
+    description: the frameworks to install beyond the default frameworks
 outputs:
   newVersion:
     description: "The new version"
@@ -25,6 +27,12 @@ runs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+
+    - name: install 3.1.x framework
+      if: inputs.frameworks == '3.1.x'
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '3.1.x'
  
     - name: Set csproj, props version(s)
       id: update
