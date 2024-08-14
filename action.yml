@@ -90,10 +90,10 @@ runs:
       shell: bash
       run: dotnet test --no-build --verbosity normal 
 
-    - name: Test Limited Testing (BuiltTest category only)
+    - name: Test Limited Testing (Unit & Integration categories only)
       if: inputs.limit_testing == 'true'
       shell: bash
-      run: dotnet test --no-build --verbosity normal --filter Category=BuildTest
+      run: dotnet test --no-build --verbosity normal --filter "(Category=Integration)|(Category=Unit)"
 
     # --settings ./Testing.runsettings 
     # --environment ABC="test2"
