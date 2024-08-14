@@ -4,9 +4,9 @@ inputs:
   secrets:
     description: The github action secrets
     required: true
-  Repository_Name:
-    description: The name of the repository
-    required: true
+  limit_testing:
+    description: Limits the testing to the category 'BuildTest' only
+    default: false
   debug_directory:
     description: true to display a list of directories
     default: false
@@ -72,10 +72,21 @@ runs:
       shell: bash
       run: ls -lR
     
-    # --verbosity normal    
-    - name: Test
+    # --verbosity normal
+    - name: List files in the repository
+      shell: bash
+      run: ls -lR
+      
+    - name: Test Full Testing
+      if: inputs.limit_testing == 'false'
       shell: bash
       run: dotnet test --no-build --verbosity normal 
+
+    - name: Test Limited Testing (BuiltTest category only)
+      if: inputs.limit_testing == 'true'
+      shell: bash
+      run: dotnet test --no-build --verbosity normal --filter Category=BuildTest
+
     # --settings ./Testing.runsettings 
     # --environment ABC="test2"
         
