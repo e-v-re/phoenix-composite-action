@@ -80,11 +80,6 @@ runs:
       shell: bash
       run: ls -lR
     
-    # --verbosity normal
-    - name: List files in the repository
-      shell: bash
-      run: ls -lR
-      
     - name: Test Full Testing
       if: inputs.limit_testing == 'false'
       shell: bash
