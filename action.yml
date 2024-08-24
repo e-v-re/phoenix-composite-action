@@ -38,7 +38,7 @@ runs:
       id: update
       uses: vers-one/dotnet-project-version-updater@v1.6
       with:
-        file: "./**/*.{csproj,props}"
+        file: "./src/**/*.{csproj,props}"
         version: "bump-revision"
 
     - name: Update github version to ${{ steps.bump.outputs.newVersion }}
