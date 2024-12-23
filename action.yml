@@ -48,7 +48,7 @@ runs:
         git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
         git add .
         git commit -m "Bump project version to ${{ steps.update.outputs.newVersion }}"
-        git push origin HEAD:master --follow-tags
+        git push --atomic origin master "v${{steps.update.outputs.newVersion}}"
 
     # Do another check out to have the project version updates
     - name: Secondary checkout
