@@ -49,14 +49,9 @@ runs:
         git add .
         git commit -m "Bump project version to ${{ steps.update.outputs.newVersion }}"
         git tag "v${{steps.update.outputs.newVersion}}"
-        git push --follow-tags origin master 
+        git push origin master
+        git push origin --tags
 
-    # Do another check out to have the project version updates
-    - name: Secondary checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0 #fetch-depth is needed for GitVersion
-        
     - name: Add Private e-v-re NuGet Registry
       shell: bash
       run: dotnet nuget add source --username plazarre --store-password-in-clear-text --name "Github e-v-re Private Repo" "https://nuget.pkg.github.com/e-v-re/index.json" --password ${{ fromJson(inputs.secrets).NUGET_PACKAGE_TOKEN }}
