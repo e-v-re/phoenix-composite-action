@@ -33,6 +33,12 @@ runs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '3.1.x'
+
+    - name: install 6.0.x framework
+      if: inputs.frameworks == '6.0.x'
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '6.0.x'
  
     - name: Set csproj, props version(s)
       id: update
