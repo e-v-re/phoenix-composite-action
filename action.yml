@@ -123,4 +123,13 @@ runs:
       with:
         tag_name: "v${{steps.update.outputs.newVersion}}"
         release_name: Release ${{steps.update.outputs.newVersion}}
+
+    - uses: advanced-security/sbom-generator-action@v0.0.2
+      id: sbom
+      env: 
+        GITHUB_TOKEN: ${{ github.token }}
     
+    - uses: actions/upload-artifact@v4
+      with: 
+      path: ${{steps.sbom.outputs.fileName }}
+      name: "SBOM"
