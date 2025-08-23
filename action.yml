@@ -27,6 +27,11 @@ runs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+        cache: true
+        cache-dependency-path: |
+        **/packages.lock.json
+        **/*.csproj
+        **/Directory.Build.props
 
     - name: install 3.1.x framework
       if: inputs.frameworks == '3.1.x'
