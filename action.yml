@@ -23,6 +23,10 @@ runs:
       with:
         fetch-depth: 0 #fetch-depth is needed for GitVersion
 
+    - name: Notes 
+      shell: bash 
+      run: echo "Using NuGet cache based on lockfiles and project files."
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
