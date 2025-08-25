@@ -68,13 +68,16 @@ runs:
         git push origin master
         git push origin --tags
 
+    - name: Add NuGet.org (public)
+      run: dotnet nuget add source "https://api.nuget.org/v3/index.json" --name "nuget.org"
+  
     - name: Add Private e-v-re NuGet Registry
       shell: bash
       run: dotnet nuget add source --username plazarre --store-password-in-clear-text --name "Github e-v-re Private Repo" "https://nuget.pkg.github.com/e-v-re/index.json" --password ${{ fromJson(inputs.secrets).NUGET_PACKAGE_TOKEN }}
       
     - name: Restore dependencies
       shell: bash
-      run: dotnet restore
+      run: dotnet restore 
 
     - name: Build & Pack
       shell: bash
