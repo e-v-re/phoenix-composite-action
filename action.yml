@@ -75,9 +75,10 @@ runs:
 
     - name: Restore dependencies
       shell: bash
-      run: dotnet restore \
-        --source "https://api.nuget.org/v3/index.json" \
-        --source "https://nuget.pkg.github.com/e-v-re/index.json"
+      run: dotnet restore 
+      #\
+      #  --source "https://api.nuget.org/v3/index.json" \
+      #  --source "https://nuget.pkg.github.com/e-v-re/index.json"
 
     - name: Build & Pack
       shell: bash
