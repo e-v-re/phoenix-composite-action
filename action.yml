@@ -24,7 +24,8 @@ runs:
         fetch-depth: 0 #fetch-depth is needed for GitVersion
 
     - name: Setup .NET (with cache)
-      if: hashFiles('**/packages.lock.json') != ''
+      if: 1 == 0  
+      # hashFiles('**/packages.lock.json') != ''
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
@@ -33,7 +34,7 @@ runs:
           **/packages.lock.json
 
     - name: Setup .NET (no cache)
-      if: hashFiles('**/packages.lock.json') == ''
+      #if: hashFiles('**/packages.lock.json') == ''
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
