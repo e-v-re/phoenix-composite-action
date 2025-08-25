@@ -71,10 +71,12 @@ runs:
     - name: Add e-v-re NuGet Registry (private)
       shell: bash
       run: dotnet nuget add source --username plazarre --store-password-in-clear-text --name "Github e-v-re Private Repo" "https://nuget.pkg.github.com/e-v-re/index.json" --password ${{ fromJson(inputs.secrets).NUGET_PACKAGE_TOKEN }}
-      
+
     - name: Restore dependencies
       shell: bash
-      run: dotnet restore 
+      run: dotnet restore \
+        --source "https://api.nuget.org/v3/index.json" \
+        --source "https://nuget.pkg.github.com/e-v-re/index.json"
 
     - name: Build & Pack
       shell: bash
